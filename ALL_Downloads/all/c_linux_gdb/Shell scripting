@@ -1,0 +1,227 @@
+
+To run this script file use ./test.sh
+
+test.sh
+echo "Hello World" #ash is used for commenting
+var =10 
+echo $var # echo is used for printing the data
+
+var = Raja
+echo $var # the symbol $ is used for printing the variable input
+echo $BASH $BASH_VERSION $HOME $PWD
+
+echo "Enter your Name"
+read Name
+echo "My name is: $Name"
+
+read Name1 Name2 Name3
+echo "Names are $Name1 $Name2 $name3"
+
+read -p 'username:' usernme  #To have usernme on the same line
+read -sp 'password:' passwrd #To have passwrd on the same line n not visible[use silent[s]]
+echo   #For having empty space
+echo "USERNAME: $usernme"
+echo "PASSWORD: $passwrd"
+
+NOTE: command with -flags are used
+
+read -a Names
+echo "${Names[0]},${Names[1]}"
+
+read 
+echo $REPLY #Whatever i/p we give, it will store in variable called REPLY
+
+Command line arguments to Bash script
+Suppose ./test.sh Raja Damu Suri
+echo $0 $1 $2 $3 #Here $0 is ./test.sh $1 is Raja $2 is Damu $3 is Suri
+echo $@  # $@ prints all the commandline arguments except $0
+echo $#  #Gives the count of no. of commandline arguments passed except $0
+
+args =("$@")
+echo ${args[0]} ${args[1]} ${args[2]} ${args[3]}
+
+
+conditional statements:
+if []
+then 
+echo statement
+elif []
+then 
+echo statement
+else
+echo statement
+fi
+
+Operators
+-eq [equal]
+-ne [not equal]
+-gt [greater than]
+-ge [greater than equal]
+-lt [less than]
+-le [less than equal]
+
+echo -e "Enter some character:\c"
+read value
+
+case $value in
+     [a-z])
+       echo "value in b/w a-z";;
+     [A-Z])
+	   echo "value in b/w a-z";;
+     [0-9])
+	   echo "value in b/w a-z";;	
+      ?)
+	  echo "value is special character";;
+	  *)
+	  echo "Default case";;
+esac
+
+if[]
+then 
+echo...
+elif []
+then 
+echo...
+else
+echo
+fi
+
+
+while []
+do
+echo ...
+done
+
+eg:
+n=1
+
+while[$n -le 10]
+do
+echo $n
+(n++)
+done
+
+while[$n -le 10] 
+do
+echo $n
+(n++)
+xterm & #To open mutliple terminals
+gnome-terminal & #same terminal
+done
+
+until[$n -ge 10] //similar to while loop but condition failure case
+do
+echo $n
+n++
+done
+
+for i in 1..5
+do
+echo $i 
+done
+
+syntax:
+select x in anylist
+do
+echo $x
+done
+
+select x in Raja damu reddy
+do
+echo $x
+done
+
+function get() #func definition
+{
+local echo $1 $2 $3 #local keyward for local arguments or else it takes global arguments
+}
+  (or)
+  
+get()
+{
+echo $1 $2 $3
+}
+
+get global edge 4 #Passing arguments in func call
+
+readonly command
+
+var = 10
+readonly var
+var =30  #Error since we made var readonly
+
+function get()
+{
+echo Hii
+}
+
+readonly -f get #Making function readonly with -f option
+
+Now try to override this function
+function get() #Error,since this function is readonly we cannot override it
+{
+echo Global edge
+}
+ 
+========================================
+
+arr =('Global' 'Edge' 'Software')
+arr[3] = 'Ltd'
+echo ${arr[0]}
+echo ${arr[1]}
+echo ${arr[2]}
+echo ${arr[3]}
+echo ${arr[@]}  #prints all the elements of the array
+echo ${!arr[@]} #prints all the indexes 
+echo ${#arr[@]} #prints the total count of arguments
+unset x[1] #Deletes that particular element 
+
+x=GlobalEdge
+echo ${x[@]}    #GlobalEdge
+echo ${#x[@]}   #1
+echo ${!x[@]}   #0
+echo ${x[0]}    #GlobalEdge
+
+Interview questions:
+1.What is the significance of $# ?
+$# prints the number of command line arguments passed to the script
+
+2. What is the difference between $* and $@?
+$@ treats each quoted arguments as separate arguments 
+but $* will consider the entire set of positional parameters as a single string.
+
+3.What is the difference between $$ and $!?
+$$ gives the process id of the currently executing process 
+$! shows the process id of the process that recently went into background.
+
+What are zombie processes?
+These are the processes which have died but whose exit status is still not picked by the parent process. 
+These processes even if not functional still have its process id entry in the process table.
+NOTE: All process ids[PIDs] are present in process table
+
+What is the significance of $? ?
+$? gives the exit status of the last command that was executed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

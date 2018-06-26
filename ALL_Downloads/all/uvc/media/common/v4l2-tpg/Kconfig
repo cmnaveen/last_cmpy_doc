@@ -1,0 +1,4 @@
+config VIDEO_V4L2_TPG
+	tristate
+comment "video_v4l2_tpg"
+

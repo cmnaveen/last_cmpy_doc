@@ -1,0 +1,53 @@
+I2C Framework in Kernel Space:
+-----------------------------
+
+Step1: Study I2C Comm protocol basics, OMAP4460 I2C Controller funional block diagram and register programming model.
+Step2: Identify the source code. 
+
+drivers/i2c/i2c-dev.c
+drivers/i2c/i2c-core.c
+drivers/i2c/busses/i2c-omap.c
+
+
+Step3: Framework implementation
+3a: I2C Initalization (Bottom to top):
+
+
+
+
+3b: I2C Operation (Top to Bottom)
+
+~ # ./i2c_app  r 00 1
+The value read from the register is 229
+
+---------------------------------------------------------------
+
+[  208.195251] drivers/i2c/i2c-dev.c:i2cdev_open:494
+[  208.200317] drivers/i2c/i2c-dev.c:i2cdev_ioctl:420 (I2C_FUNC)
+[  208.205383] drivers/i2c/i2c-dev.c:i2cdev_ioctl:420 (I2C_SLAVE)
+[  208.210479] drivers/i2c/i2c-dev.c:i2cdev_ioctl:420 (I2C_SMBUS)
+[  208.215545] drivers/i2c/i2c-dev.c:i2cdev_ioctl_smbus:336
+[  208.221191] drivers/i2c/i2c-core.c:i2c_smbus_xfer:2157
+[  208.226593] drivers/i2c/i2c-core.c:i2c_smbus_xfer_emulated:1976
+[  208.232879] drivers/i2c/i2c-core.c:i2c_transfer:1368
+[  208.238128] drivers/i2c/i2c-core.c:__i2c_transfer:1337
+
+-----------------------------------------------------------------------
+[  208.243591] drivers/i2c/busses/i2c-omap.c:omap_i2c_xfer:646:
+[  208.249603] drivers/i2c/busses/i2c-omap.c:__omap_i2c_init:283:
+[  208.255767] drivers/i2c/busses/i2c-omap.c:omap_i2c_wait_for_bb:464:
+[  208.262420] drivers/i2c/busses/i2c-omap.c:omap_i2c_xfer_msg:527:
+[  208.268768] drivers/i2c/busses/i2c-omap.c:omap_i2c_resize_fifo:481:
+[  208.275482] drivers/i2c/busses/i2c-omap.c:omap_i2c_transmit_data:861:
+[  208.282287] drivers/i2c/busses/i2c-omap.c:omap_i2c_transmit_data:883: ***** DATA:0 *****
+[  208.290924] drivers/i2c/busses/i2c-omap.c:omap_i2c_xfer_msg:527:
+[  208.297271] drivers/i2c/busses/i2c-omap.c:omap_i2c_resize_fifo:481:
+[  208.304016] drivers/i2c/busses/i2c-omap.c:omap_i2c_receive_data:837:
+[  208.310729] drivers/i2c/busses/i2c-omap.c:omap_i2c_receive_data:840: ***** DATA:229 *****
+[  208.319427] drivers/i2c/busses/i2c-omap.c:omap_i2c_wait_for_bb:464:
+
+
+
+
+
+

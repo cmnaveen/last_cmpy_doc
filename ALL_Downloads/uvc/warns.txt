@@ -1,0 +1,188 @@
+make ARCH=x86 -C /lib/modules/4.4.0-34-generic/build  -Imedia/  -Iinclude/media/ -Imedia/ M=/home/naveen/Downloads/uvc modules
+make[1]: Entering directory '/usr/src/linux-headers-4.4.0-34-generic'
+  CHECK   /home/naveen/Downloads/uvc/uvc_driver.c
+failed to open: db/db.schema
+failed to open: db/caller_info.schema
+failed to open: db/return_states.schema
+failed to open: db/function_type_size.schema
+failed to open: db/type_size.schema
+failed to open: db/call_implies.schema
+failed to open: db/function_ptr.schema
+failed to open: db/local_values.schema
+failed to open: db/function_type_value.schema
+failed to open: db/type_value.schema
+failed to open: db/function_type.schema
+failed to open: db/data_info.schema
+failed to open: db/parameter_name.schema
+failed to open: db/constraints.schema
+failed to open: db/constraints_required.schema
+failed to open: db/fn_ptr_data_link.schema
+failed to open: db/fn_data_link.schema
+  CC [M]  /home/naveen/Downloads/uvc/uvc_driver.o
+  CHECK   /home/naveen/Downloads/uvc/uvc_queue.c
+failed to open: db/db.schema
+failed to open: db/caller_info.schema
+failed to open: db/return_states.schema
+failed to open: db/function_type_size.schema
+failed to open: db/type_size.schema
+failed to open: db/call_implies.schema
+failed to open: db/function_ptr.schema
+failed to open: db/local_values.schema
+failed to open: db/function_type_value.schema
+failed to open: db/type_value.schema
+failed to open: db/function_type.schema
+failed to open: db/data_info.schema
+failed to open: db/parameter_name.schema
+failed to open: db/constraints.schema
+failed to open: db/constraints_required.schema
+failed to open: db/fn_ptr_data_link.schema
+failed to open: db/fn_data_link.schema
+  CC [M]  /home/naveen/Downloads/uvc/uvc_queue.o
+  CHECK   /home/naveen/Downloads/uvc/uvc_v4l2.c
+failed to open: db/db.schema
+failed to open: db/caller_info.schema
+failed to open: db/return_states.schema
+failed to open: db/function_type_size.schema
+failed to open: db/type_size.schema
+failed to open: db/call_implies.schema
+failed to open: db/function_ptr.schema
+failed to open: db/local_values.schema
+failed to open: db/function_type_value.schema
+failed to open: db/type_value.schema
+failed to open: db/function_type.schema
+failed to open: db/data_info.schema
+failed to open: db/parameter_name.schema
+failed to open: db/constraints.schema
+failed to open: db/constraints_required.schema
+failed to open: db/fn_ptr_data_link.schema
+failed to open: db/fn_data_link.schema
+  CC [M]  /home/naveen/Downloads/uvc/uvc_v4l2.o
+  CHECK   /home/naveen/Downloads/uvc/uvc_video.c
+failed to open: db/db.schema
+failed to open: db/caller_info.schema
+failed to open: db/return_states.schema
+failed to open: db/function_type_size.schema
+failed to open: db/type_size.schema
+failed to open: db/call_implies.schema
+failed to open: db/function_ptr.schema
+failed to open: db/local_values.schema
+failed to open: db/function_type_value.schema
+failed to open: db/type_value.schema
+failed to open: db/function_type.schema
+failed to open: db/data_info.schema
+failed to open: db/parameter_name.schema
+failed to open: db/constraints.schema
+failed to open: db/constraints_required.schema
+failed to open: db/fn_ptr_data_link.schema
+failed to open: db/fn_data_link.schema
+/home/naveen/Downloads/uvc/uvc_video.c:64 threadfn_pop_queue() warn: inconsistent indenting
+/home/naveen/Downloads/uvc/uvc_video.c:80 threadfn_pop_queue() warn: inconsistent indenting
+/home/naveen/Downloads/uvc/uvc_video.c:96 threadfn_pop_queue() warn: inconsistent indenting
+/home/naveen/Downloads/uvc/uvc_video.c:104 threadfn_pop_queue() warn: inconsistent indenting
+/home/naveen/Downloads/uvc/uvc_video.c:125 usb_endpoint_maxp_mult() warn: inconsistent indenting
+/home/naveen/Downloads/uvc/uvc_video.c:1580 uvc_init_video_isoc() warn: inconsistent indenting
+/home/naveen/Downloads/uvc/uvc_video.c:1627 uvc_init_video_isoc() warn: inconsistent indenting
+/home/naveen/Downloads/uvc/uvc_video.c:1985 uvc_video_enable() warn: inconsistent indenting
+  CC [M]  /home/naveen/Downloads/uvc/uvc_video.o
+  CHECK   /home/naveen/Downloads/uvc/uvc_ctrl.c
+failed to open: db/db.schema
+failed to open: db/caller_info.schema
+failed to open: db/return_states.schema
+failed to open: db/function_type_size.schema
+failed to open: db/type_size.schema
+failed to open: db/call_implies.schema
+failed to open: db/function_ptr.schema
+failed to open: db/local_values.schema
+failed to open: db/function_type_value.schema
+failed to open: db/type_value.schema
+failed to open: db/function_type.schema
+failed to open: db/data_info.schema
+failed to open: db/parameter_name.schema
+failed to open: db/constraints.schema
+failed to open: db/constraints_required.schema
+failed to open: db/fn_ptr_data_link.schema
+failed to open: db/fn_data_link.schema
+  CC [M]  /home/naveen/Downloads/uvc/uvc_ctrl.o
+  CHECK   /home/naveen/Downloads/uvc/uvc_status.c
+failed to open: db/db.schema
+failed to open: db/caller_info.schema
+failed to open: db/return_states.schema
+failed to open: db/function_type_size.schema
+failed to open: db/type_size.schema
+failed to open: db/call_implies.schema
+failed to open: db/function_ptr.schema
+failed to open: db/local_values.schema
+failed to open: db/function_type_value.schema
+failed to open: db/type_value.schema
+failed to open: db/function_type.schema
+failed to open: db/data_info.schema
+failed to open: db/parameter_name.schema
+failed to open: db/constraints.schema
+failed to open: db/constraints_required.schema
+failed to open: db/fn_ptr_data_link.schema
+failed to open: db/fn_data_link.schema
+  CC [M]  /home/naveen/Downloads/uvc/uvc_status.o
+  CHECK   /home/naveen/Downloads/uvc/uvc_isight.c
+failed to open: db/db.schema
+failed to open: db/caller_info.schema
+failed to open: db/return_states.schema
+failed to open: db/function_type_size.schema
+failed to open: db/type_size.schema
+failed to open: db/call_implies.schema
+failed to open: db/function_ptr.schema
+failed to open: db/local_values.schema
+failed to open: db/function_type_value.schema
+failed to open: db/type_value.schema
+failed to open: db/function_type.schema
+failed to open: db/data_info.schema
+failed to open: db/parameter_name.schema
+failed to open: db/constraints.schema
+failed to open: db/constraints_required.schema
+failed to open: db/fn_ptr_data_link.schema
+failed to open: db/fn_data_link.schema
+  CC [M]  /home/naveen/Downloads/uvc/uvc_isight.o
+  CHECK   /home/naveen/Downloads/uvc/uvc_debugfs.c
+failed to open: db/db.schema
+failed to open: db/caller_info.schema
+failed to open: db/return_states.schema
+failed to open: db/function_type_size.schema
+failed to open: db/type_size.schema
+failed to open: db/call_implies.schema
+failed to open: db/function_ptr.schema
+failed to open: db/local_values.schema
+failed to open: db/function_type_value.schema
+failed to open: db/type_value.schema
+failed to open: db/function_type.schema
+failed to open: db/data_info.schema
+failed to open: db/parameter_name.schema
+failed to open: db/constraints.schema
+failed to open: db/constraints_required.schema
+failed to open: db/fn_ptr_data_link.schema
+failed to open: db/fn_data_link.schema
+  CC [M]  /home/naveen/Downloads/uvc/uvc_debugfs.o
+  CHECK   /home/naveen/Downloads/uvc/uvc_entity.c
+failed to open: db/db.schema
+failed to open: db/caller_info.schema
+failed to open: db/return_states.schema
+failed to open: db/function_type_size.schema
+failed to open: db/type_size.schema
+failed to open: db/call_implies.schema
+failed to open: db/function_ptr.schema
+failed to open: db/local_values.schema
+failed to open: db/function_type_value.schema
+failed to open: db/type_value.schema
+failed to open: db/function_type.schema
+failed to open: db/data_info.schema
+failed to open: db/parameter_name.schema
+failed to open: db/constraints.schema
+failed to open: db/constraints_required.schema
+failed to open: db/fn_ptr_data_link.schema
+failed to open: db/fn_data_link.schema
+  CC [M]  /home/naveen/Downloads/uvc/uvc_entity.o
+  LD [M]  /home/naveen/Downloads/uvc/uvcvideo.o
+  Building modules, stage 2.
+  MODPOST 1 modules
+  CC      /home/naveen/Downloads/uvc/uvcvideo.mod.o
+  LD [M]  /home/naveen/Downloads/uvc/uvcvideo.ko
+make[1]: Leaving directory '/usr/src/linux-headers-4.4.0-34-generic'
+#   make -C /lib/modules/4.4.0-34-generic/build    M=/home/naveen/Downloads/uvc modules

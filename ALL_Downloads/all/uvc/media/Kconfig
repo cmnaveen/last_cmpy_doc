@@ -1,0 +1,81 @@
+#
+# Multimedia device configuration
+#
+
+	
+
+source "drivers/media/rc/Kconfig"
+source "media/Kconfig"
+menuconfig MEDIA_SUPPORT
+	tristate "Multimedia support"
+	depends on HAS_IOMEM
+	help
+	  If you want to use Webcams, Video grabber devices and/or TV devices
+	  enable this option and other options below.
+	  Additional info and docs are available on the web at
+	  <https://linuxtv.org>
+
+if MEDIA_SUPPORT
+
+comment "Multimedia core support"
+
+#
+# Multimedia support - automatically enable V4L2 and DVB core
+#
+config MEDIA_CAMERA_SUPPORT
+	bool "Cameras/video grabbers support"
+	---help---
+	  Enable support for webcams and video grabbers.
+
+	  Say Y when you have a webcam or a video capture grabber board.
+
+config MEDIA_CONTROLLER_DVB
+	bool "Enable Media controller for DVB (EXPERIMENTAL)"
+	depends on MEDIA_CONTROLLER && DVB_CORE
+	---help---
+	  Enable the media controller API support for DVB.
+
+	  This is currently experimental.
+
+#
+# Video4Linux support
+#	Only enables if one of the V4L2 types (ATV, webcam, radio) is selected
+#
+
+config VIDEO_DEV
+	tristate
+	depends on MEDIA_SUPPORT
+	depends on MEDIA_CAMERA_SUPPORT || MEDIA_ANALOG_TV_SUPPORT || MEDIA_RADIO_SUPPORT || MEDIA_SDR_SUPPORT
+	default y
+
+config VIDEO_V4L2_SUBDEV_API
+	bool "V4L2 sub-device userspace API"
+	depends on VIDEO_DEV && MEDIA_CONTROLLER
+	---help---
+	  Enables the V4L2 sub-device pad-level userspace API used to configure
+	  video format, size and frame rate between hardware blocks.
+
+	  This API is mostly used by camera interfaces in embedded platforms.
+
+source "media/v4l2-core/Kconfig"
+config DVB_CORE
+	tristate
+	depends on MEDIA_SUPPORT
+	default y
+	select CRC32
+
+source "media/dvb-core/Kconfig"
+
+comment "Media drivers"
+
+#
+# V4L platform/mem2mem drivers
+#
+
+source "media/usb/Kconfig"
+source "media/platform/Kconfig"
+
+source "media/common/Kconfig"
+source "media/dvb-frontends/Kconfig"
+
+endif # MEDIA_SUPPORT

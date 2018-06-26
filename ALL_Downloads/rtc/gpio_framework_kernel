@@ -1,0 +1,207 @@
+GPIO Framework in Kernel Space:
+------------------------------
+Step 1:Study GPIO Basics & OMAP4460 GPIO Controller  block diagram, specifications & register programming model.
+
+Step 2:Identify GPIO Device Driver Source code in kernel. 
+------
+$ grep -i GPIO arch/arm/configs/omap2plus_defconfig
+
+CONFIG_GPIOLIB=y
+drivers/gpio/gpiolib.c
+
+CONFIG_KEYBOARD_GPIO=y
+drivers/input/keyboard/Makefile:obj-$(CONFIG_KEYBOARD_GPIO)             += gpio_keys.o
+drivers/input/keyboard/gpio_keys.c
+
+
+CONFIG_GPIO_DEVRES=y
+drivers/gpio/devres.c
+
+
+
+CONFIG_OF_GPIO=y
+drivers/gpio/gpiolib-of.c
+
+CONFIG_DEBUG_GPIO=y
+drivers/gpio/Makefile:ccflags-$(CONFIG_DEBUG_GPIO)      += -DDEBUG
+
+CONFIG_GPIO_SYSFS=y
+drivers/gpio/gpiolib.c:#ifdef CONFIG_GPIO_SYSFS
+drivers/gpio/gpiolib.c:#ifdef CONFIG_GPIO_SYSFS
+drivers/gpio/gpiolib.c:#endif /* CONFIG_GPIO_SYSFS */
+
+CONFIG_GPIO_TWL4030=y
+drivers/gpio/Makefile:obj-$(CONFIG_GPIO_TWL4030)        += gpio-twl4030.o
+
+CONFIG_LEDS_GPIO=y
+drivers/leds/Makefile:obj-$(CONFIG_LEDS_GPIO)                   += leds-gpio.o
+
+CONFIG_LEDS_TRIGGERS=y
+drivers/leds/Makefile:obj-$(CONFIG_LEDS_TRIGGERS)               += led-triggers.o
+
+CONFIG_GENERIC_GPIO=y
+include/linux/gpio.h:#ifdef CONFIG_GENERIC_GPIO
+include/linux/gpio.h:#else /* ! CONFIG_GENERIC_GPIO */
+include/linux/gpio.h:#endif /* ! CONFIG_GENERIC_GPIO */
+
+******************* Step 2 END Here *************************************
+
+Step3: Prepare a Framework
+-----
+
+Step3a: GPIO Initialization (Bottom to Top) - Communication between Board specific layer to Low level Device Driver. 
+
+Enable printf() statements in board specific file and low level device driver inside each and every function.
+
+Board Specific Code:
+-------------------
+1. Board Specific file:   arch/arm/mach-omap2/board-omap4panda.c (board specific initalization - MUX,timers,clocks)
+2. arch/arm/mach-omap2/gpio.c (gpio initalization, GPIO platform device registration happend with name "omap_gpio")
+    omap2_gpio_dev_init ()
+    {
+       char *name = "omap_gpio";
+    }
+   arch/arm/plat-omap/include/plat/gpio.h
+struct omap_gpio_platform_data {
+        strutct omap_gpio_reg_offs *regs
+}
+
+arch/arm/mach-omap2/omap_hwmod.c (generic h/w module initalization)
+arch/arm/mach-omap2/omap_hwmod_44xx_data.c (All platform data available here)
+
+Low Level Device Driver:
+-----------------------
+1. drivers/gpio/gpio-omap.c
+init ()
+{
+platform_driver_register(&omap_gpio_driver);
+}
+static struct platform_driver omap_gpio_driver = {
+        .probe          = omap_gpio_probe,
+        .driver         = {
+                .name   = "omap_gpio",
+                .pm     = &gpio_pm_ops,
+                .of_match_table = of_match_ptr(omap_gpio_match),
+        },
+};
+
+Base Address:
+0x4A31 0000
+0x4805 5000
+0x4805 7000
+0x4805 9000
+0x4805 B000
+0x4805 D000
+
+What is Probe?
+-------------
+Probe indicates harware device is exist or not.
+How Probe invokes?
+------------------
+The Device name matches in between board specific file and low level device driver than probe invokes. 
+Once probe invokes
+------------------
+- get the platform data or device data from board specifile source code or device tree.
+- gpio_chip strutcure initalization for communicate gpiolib.c file i.e., high level layer.
+- Interrupt registration  (request_irq)
+- memory mapped I/O allocation (ioremap)
+
+
+Log file output:
+---------------
+[    0.260498] omap-gpmc omap-gpmc: GPMC revision 6.0
+[    0.262451] gpio.c:omap2_gpio_init
+[    0.262451] gpio.c:omap2_gpio_dev_init
+[    0.262878] gpio.c:omap2_gpio_dev_init
+[    0.263275] gpio.c:omap2_gpio_dev_init
+[    0.263732] gpio.c:omap2_gpio_dev_init
+[    0.264160] gpio.c:omap2_gpio_dev_init
+[    0.264587] gpio.c:omap2_gpio_dev_init
+[    0.265747] gpio-omap.c: omap_gpio_drv_reg
+[    0.265747] gpio-omap.c: omap_gpio_probe
+[    0.265747] gpio-omap.c: omap_gpio_chip_init
+[    0.267913] OMAP GPIO hardware version 0.1
+[    0.268066] gpio-omap.c: omap_gpio_probe
+[    0.268066] gpio-omap.c: omap_gpio_chip_init
+[    0.269531] gpio-omap.c: omap_gpio_probe
+[    0.269531] gpio-omap.c: omap_gpio_chip_init
+[    0.270904] gpio-omap.c: omap_gpio_probe
+[    0.270904] gpio-omap.c: omap_gpio_chip_init
+[    0.272308] gpio-omap.c: omap_gpio_probe
+[    0.272308] gpio-omap.c: omap_gpio_chip_init
+[    0.273742] gpio-omap.c: omap_gpio_probe
+[    0.273742] gpio-omap.c: omap_gpio_chip_init
+*********************************************************************************************
+Step3b: Device Driver Operation: (Top to Bottom)
+-----------------------------------------------
+Run application and collect the logs
+
+"User space" 
+
+$ cd gpio156
+$echo out >  direction
+
+------------------------------------------------------------------------------------
+******"Kernel space: High level GPIO Device driver"*******
+
+[  128.567932] gptiolib.c: gpio_direction_store
+[  128.567932]  gptiolib.c: gpiod_direction_output value:0
+
+include/asm-generic/gpio.h
+struct gpio_chip {
+        const char              *label;
+        struct device           *dev;
+        struct module           *owner;
+        struct list_head        list;
+
+        int                     (*request)(struct gpio_chip *chip,
+                                                unsigned offset);
+        void                    (*free)(struct gpio_chip *chip,
+                                                unsigned offset);
+        int                     (*get_direction)(struct gpio_chip *chip,
+                                                unsigned offset);
+        int                     (*direction_input)(struct gpio_chip *chip,
+                                                unsigned offset);
+        int                     (*get)(struct gpio_chip *chip,
+                                                unsigned offset);
+        int                     (*direction_output)(struct gpio_chip *chip,
+                                                unsigned offset, int value);
+        int                     (*set_debounce)(struct gpio_chip *chip,
+                                                unsigned offset, unsigned debounce);
+
+        void                    (*set)(struct gpio_chip *chip,
+                                                unsigned offset, int value);
+
+        int                     (*to_irq)(struct gpio_chip *chip,
+                                                unsigned offset);
+
+        void                    (*dbg_show)(struct seq_file *s,
+                                                struct gpio_chip *chip);
+        int                     base;
+        u16                     ngpio;
+        struct gpio_desc        *desc;
+        const char              *const *names;
+        unsigned                can_sleep:1;
+        unsigned                exported:1;
+
+#if defined(CONFIG_OF_GPIO
+---------------------------------------------------------------------------------------
+"Kernel space: Low level GPIO driver"
+[  128.567962] gpio-omap.c: gpio_output
+[  128.567962]  gpio-omap.c: __set_gpio_dataout_reg
+[  128.567962]  gpio-omap.c: __set_gpio_dataout_reg l:268435456 reg:fa05b190
+[  128.567993] gpio-omap.c: __set_gpio_direction
+[  128.567993]  gpio-omap.c: __set_gpio_direction l:-268435457 reg:fa05b134
+
+-------------------------------------------------------------------------------------- 
+
+
+echo out > direction 
+
+[   50.157775] gpio-omap.c: gpio_output
+
+ gpio-omap.c: __set_gpio_dataout_reg
+ gpio-omap.c: __set_gpio_dataout_reg l:16384 reg:fa059190
+[   50.170501] gpio-omap.c: __set_gpio_direction
+ gpio-omap.c: __set_gpio_direction l:-16385 reg:fa059134
+

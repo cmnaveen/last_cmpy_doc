@@ -1,0 +1,63 @@
+Questions:
+1.What is Priority Inheritance?
+2.How to find circular loop?
+3.Write your own strcat()?
+4.Write the power function[x power y]?
+5.What is Singleton class? Explain with code
+6.What is Abstract class? Explain with code
+7.What is observer pattern? Explain with code 
+8.What is virtual function? Why do we use?
+9.What is pure virtual function ?Will it have body? Why do we use?
+10.What is Abstract class? Why do we use?
+11.What is virtual constructor and virtual destructor?
+12.What is volatile keyword ? Where do we use
+13.What is register ? declaration ?Why is it used?
+14.Reverse linked list Recursively
+15.Delete nodes in unsorted linked list?
+16.Implement stack and queue using linked list?
+17.Given a Single pointer to a node of Single linked list,How to do you delete that node?
+18.What is constant variable ? Why do we use?
+19.Write the code for getting the no. of bites set count in a number?
+20.Where is static and constant variables get stored ?
+21.Implement string palindrome without using string reverse?
+22.Find the middle node using only pointer
+23.Implement constructor,copy constructor and assignment operator for a class with single pointer,constant variable?
+24.What is Initializer list?Why do we use it?
+25.What is Dangling pointer? Explain few scenarios
+26.What is Segmentation fault? Scenarios for it?
+27.How to allocate memory to a ptr without deleting the existing memory?Write the syntax for the same?
+28.What is null pointer? Why do we use it?
+29.What is wild,void pointer? Where do we use void type pointer
+30.Explain vptr and vtble using virtual function? 
+31.How many vtbles n vptrs are created for a Base n its Derived class?
+32.Where does vptr initialization takes place?When does vtable get created[compile time/Run time]?
+33.What does vtble contain?
+34.Explain how do you implement stack using queues?
+35.Explain how do you implement Queue using Stacks?
+36.What is object slicing?Where does it occur?
+37.Explain static and dynamic linking libraries?
+38.Explain few design patterns with real time examples?
+40.What is the difference b/w Thread and Process
+41.What are the different types of IPC's available?
+42.Explain Each IPC in detail?
+43.What is the difference b/w Message Queue and Pipe?
+44.What are the Synchronization Techniques available? Explain Each in detail
+45.What is semaphore? How many types of semaphores are available?
+46.Difference b/w counting and binary semaphore?
+47.Difference b/w Binary Semaphore and mutex?
+48.A Binary semaphore with condition variables,Can it behave like mutex?
+49.Reverse the given string using stack ?
+50.What are bit fields?Why do we use it?Explain in detail with examples
+51.What is core dump? How do you use gdb?Explain gdb in detail
+52.How to do gdb for multi-threaded application
+
+
+
+
+
+
+
+
+
+
+
