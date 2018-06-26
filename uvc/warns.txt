@@ -1,0 +1,5 @@
+make -C /lib/modules/4.4.0-34-generic/build  -I/./include/media/ -I./drivers/media/ -I./include/uapi/linux/usb/ -I/./include/media/ -I./drivers/media/ M= modules
+make[1]: Entering directory '/usr/src/linux-headers-4.4.0-34-generic'
+arch/x86/Makefile:199: recipe for target 'archheaders' failed
+make[1]: Leaving directory '/usr/src/linux-headers-4.4.0-34-generic'
+makefile:52: recipe for target 'all' failed

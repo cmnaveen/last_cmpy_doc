@@ -1,0 +1,58 @@
+EE382N-4  Embedded Systems Architecture Timing of Interrupts
+
+Before an interrupt handler can do anything, it must save away the current program's registers (if it touches those registers) 
+
+That's why the FIQ has lots of extra registers  
+‐ to minimize CPU context saving overhead user program user program “servicing” interrupt  
+Interrupt Task
+IRQ
+FIQ
+time
+cpu context saved
+cpu context restored
+Interrupt response
+Interrupt latency
+
+1/12/2010
+25
+EE382N-4  
+
+
+Embedded Systems Architecture
+Interrupt Context
+
+Not associated with a process.
+– Cannot sleep:
+no task to reschedule.
+–current  macro points to interrupted process.
+
+Shares kernel stack of interrupted process.
+– Be very frugal in stack usage.
+26
+1/12/2010
+EE382N-4  Embedded Systems Architecture
+Registering a Handler request_irq() 
+– Register an interrupt handler for a given  interrupt  input pin.
+free_irq()
+–Unregister  a  given  interrupt  handler.  –  Disable  interrupt  line  if  all  handlers unregistered.  
+27
+1/12/2010
+EE382N-4  Embedded Systems Architecture
+
+
+
+Top and Bottom Halves 
+Interrupt  handling  sometimes  needs  to  perform lengthy  tasks. 
+
+This problem is resolved by splitting the interrupt handler into two halves:
+– Top half responds to the interrupt
+•  The one registered to request_irq • Saves data to device ‐ specific buffer and  schedules the bottom half  • Current interrupt disabled, possibly all disabled. • Runs in interrupt context, not process context.  Can’t sleep. •  Acknowledges  receipt of interrupt. • Schedules bottom half to run later. – Bottom half is scheduled by the top half to execute later • With all interrupts  enabled • Wakes  up processes,  starts I/O operations,  etc.  • Runs  in  process context with interrupts enabled. • Performs  most  work required. Can sleep. • Ex: copies network data to memory buffers.
+
+
+1/12/2010
+28
+EE382N-4  Embedded Systems Architecture
+
+
+Top and Bottom Halves 
+Three mechanisms may be used to implement bottom halves –  SoftIRQs • Have  strong locking requirements • Only used of performance  sensitive subsystems –networking, SCSI, etc.   *Reentrant  – Tasklets • Built on top  of SoftIRQs •Should not sleep • Cannot run in parallel with itself • Can run in parallel with other tasklets on SMP systems • Guaranteed to run on the same CPU that first scheduled  them – Workqueues • Can sleep • Cannot copy data to and from user space 1/12/2010 29 EE382N-4  Embedded Systems Architecture Dos and Don’ts of Interrupt Handlers  It's a programming offense if your interrupt context code goes to sleep. Interrupt handlers cannot relinquish the processor bycalling sleepy functions such as schedule_timeout().  For protecting critical sections inside interrupt handlers, you can't use mutexes because they  may go to sleep. Use spinlocks instead, and use them only if you must.  Interrupt handlers are supposed  to get out of the  wayquickly  but are expected to  get the  job done. To circumvent this Catch‐ 22, interrupt handlers split their work into two halves: top (slim) and bottom (fat).  You do NOT need to design interrupt handlers to be reentrant. When an nterrupt handler s running, the  orrespondingIRQ is disabled until the handler  returns. Interrupt handlers can be interrupted by handlers associated  with IRQs that  have higher priority. You can prevent this nested interruption by specifically  requesting the kernel to  treat your interrupt handler as  a fast handler. 
