@@ -1,0 +1,11 @@
+setenv ipaddr 172.16.9.123;setenv serverip 172.16.9.21;tftpboot 0x80F80000 am335x-boneblack.dtb;tftpboot 0x80007FC0 uImage
+
+setenv bootargs console=ttyO0,115200n8 root=/dev/nfs rw nfsroot=172.16.9.21:/srv/nfs/bbb/,nolock, wsize=1024, rsize=1024 rootwait  rootdelay=5 ip=172.16.9.123
+
+bootm 0x80007FC0 - 0x80F80000
+
+NFS server creation:
+http://linuxkernel51.blogspot.com/2015/08/boot-beaglebone-black-with-nfs.html
+
+BBB arguments:
+https://wiki.beyondlogic.org/index.php/BeagleBoneBlack_Building_Kernel
