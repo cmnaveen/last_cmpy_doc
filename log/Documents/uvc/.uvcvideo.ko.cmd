@@ -1,0 +1,1 @@
+cmd_/home/naveen/Documents/uvc/uvcvideo.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/naveen/Documents/uvc/uvcvideo.ko /home/naveen/Documents/uvc/uvcvideo.o /home/naveen/Documents/uvc/uvcvideo.mod.o ;  true
